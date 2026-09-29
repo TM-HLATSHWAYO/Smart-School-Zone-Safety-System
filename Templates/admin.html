@@ -1,0 +1,131 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/static/style/style4.css">
+</head>
+<body>
+
+
+
+
+<h2>Sensor Dashboard</h2>
+
+
+<div class="dashboard">
+    <div class="chart-box"><h3>Temperature</h3><canvas id="tempChart"></canvas></div>
+    <div class="chart-box"><h3>Humidity</h3><canvas id="humidityChart"></canvas></div>
+    <div class="chart-box"><h3>PIR Sensor</h3><canvas id="pirChart"></canvas></div>
+    <div class="chart-box"><h3>LDR </h3><canvas id="ldr1Chart"></canvas></div>
+    <div class="chart-box"><h3>Ultrasonic</h3><canvas id="ultraChart"></canvas></div>
+   
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const maxPoints = 20;
+
+    function createSensorChart(ctxId, label, color) {
+        const ctx = document.getElementById(ctxId).getContext('2d');
+        return new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: label,
+                    data: [],
+                    borderColor: color,
+                    tension: 0.2,
+                    fill: false
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                animation: false,
+                scales: {
+                    x: { title: { display: true, text: 'Time' }},
+                    y: { beginAtZero: true, title: { display: true, text: 'Value' }}
+                }
+            }
+        });
+    }
+
+    const charts = {
+        temperature: createSensorChart('tempChart', 'Temperature (°C)', 'red'),
+        humidity: createSensorChart('humidityChart', 'Humidity (%)', 'blue'),
+        pir: createSensorChart('pirChart', 'Motion Detected', 'orange'),
+        ldr1: createSensorChart('ldr1Chart', 'LDR1', 'green'),
+        ultrasonic: createSensorChart('ultraChart', 'ultra', 'purple'),
+       
+    };
+
+    async function updateChartData(sensor, url) {
+        try {
+            const res = await fetch(url);
+            const json = await res.json();
+            if (!json.error) {
+                const time = json.timestamp;
+                const value = parseFloat(json.value);
+                const chart = charts[sensor];
+
+                if (!isNaN(value)) {
+                    chart.data.labels.push(time);
+                    chart.data.datasets[0].data.push(value);
+
+                    if (chart.data.labels.length > maxPoints) {
+                        chart.data.labels.shift();
+                        chart.data.datasets[0].data.shift();
+                    }
+
+                    chart.update();
+                }
+            }
+        } catch (err) {
+            console.error(`Error updating ${sensor}:`, err);
+        }
+    }
+
+    const sensorEndpoints = {
+        temperature: '/temp_data',
+        humidity: '/humidity_data',
+        pir: '/pir_data',
+        ldr1: '/ldr1_data',
+        ultrasonic: '/ultrasonic_data'
+    };
+
+    function pollAllSensors() {
+        for (const [sensor, url] of Object.entries(sensorEndpoints)) {
+            updateChartData(sensor, url);
+        }
+    }
+
+    pollAllSensors();
+    setInterval(pollAllSensors, 10000);
+</script>
+
+ <h1>ESP32-CAM Live Feed</h1>
+<div class="cam">
+    <img src="{{ stream_url }}" width="640">
+
+    <script>
+        setInterval(() => {
+            fetch('/get-data')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.motion_detected !== undefined) {
+                        document.getElementById("motion").innerText = data.motion_detected;
+                    }
+                });
+        }, 2000);
+    </script>
+</div>
+    
+</body>
+</html>
+
+{% endblock %}

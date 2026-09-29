@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verification Result</title>
+    <link rel="stylesheet" href="/static/style/styles3.css">
+</head>
+<body>
+
+<div class="wrapper">
+
+   
+    <div class="confirmation-box">
+
+        <!-- Status Icon + Message -->
+        <div class="status-icon">
+            {% if exists %}
+                <div class="circle success-circle">✔</div>
+                <h1 class="status-title">Login Confirmed!</h1>
+                <p class="status-message">{{ username }} successfully logged in.</p>
+            {% else %}
+                <div class="circle error-circle">✖</div>
+                <h1 class="status-title">Login Failed!</h1>
+                <p class="status-message">{{ username }} invalid credentials.</p>
+            {% endif %}
+        </div>
+
+        <!-- Sensor Navigation -->
+        <div class="sensor-section">
+            <h2>Available Dashboard</h2>
+            <div class="sensor-links">
+                {% if username == "224121618" %}
+                    <a class="nav-link" href="/temperature_humidity">Humidity/Temperature</a>
+
+                {% elif username == "218387350" %}
+                    <a class="nav-link" href="/pir">Passive Infra-red Sensor</a>
+                    
+                {% elif username == "223361380" %}  
+                    <a class="nav-link" href="/ultra">Ultrasonic Sensor</a>
+                    
+                {% elif username == "240557131" %}  
+                    <a class="nav-link" href="/ldr_1">Light Dependent Resistor</a>
+
+                {% elif username == "224295748" %}  
+                    <a class="nav-link" href="/cam">Camera Module</a>
+
+                {% elif username == "admin" %}  
+                    <a class="nav-link" href="/admin">Admin</a>
+
+                {% else %}
+                    <a class="nav-link" href="/register">Register</a>
+                {% endif %}
+            </div>
+        </div>
+
+        
+        <div class="action">
+            <button class="btn">
+                <a href="/login" style="text-decoration:none; color:inherit;">Go Back</a>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

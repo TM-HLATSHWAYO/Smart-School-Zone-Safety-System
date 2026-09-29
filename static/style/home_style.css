@@ -1,0 +1,102 @@
+
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  /* background: linear-gradient(to right, #04496e, #00b4d8); */
+  background-image: url('/static/images/sch.jpg'); 
+  background-size: cover;          
+  background-repeat: no-repeat;   
+  background-position: center;     
+  background-attachment: fixed;    
+  color: #00008B;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0347a0;
+  padding: 15px 40px;
+}
+
+.navbar h2 {
+  font-size: 1.5em;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  color: #111;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+  
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 40px;
+}
+
+.sensor-card {
+  background-color: #ffffff20;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  transition: transform 0.3s ease;
+}
+
+.sensor-card:hover {
+  transform: translateY(-5px);
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ff8800;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #0347a0;
+  color: #fff;
+}
+
+.header-banner {
+  background-color: #ff8c00; 
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 28px;
+  padding: 20px 0;
+  border-radius: 10px;
+  width: 80%;
+  margin: 30px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+}
+
+.header-banner h1 {
+  margin: 0;
+  text-transform: uppercase;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}

@@ -1,0 +1,37 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Dashboard</title>
+
+    
+</head>
+
+
+<body>
+
+    <h1>ESP32-CAM Live Feed</h1>
+
+    <img src="{{ stream_url }}" width="640">
+
+    <div class="box">
+        Footage: <span id="motion">Loading...</span>    </div>
+
+    <script>
+        setInterval(() => {
+            fetch('/get-data')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.motion_detected !== undefined) {
+                        document.getElementById("motion").innerText = data.motion_detected;
+                    }
+                });
+        }, 2000);
+    </script>
+
+</body>
+</html>
+{% endblock %}

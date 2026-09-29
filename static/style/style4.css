@@ -1,0 +1,219 @@
+/* Global styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: url('../images/sch.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+}
+
+/* Dashboard grid */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Chart boxes styled like cards */
+.chart-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    height: 320px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.chart-box h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Canvas charts */
+canvas {
+    width: 100% !important;
+    height: 220px !important;
+}
+
+/* ESP32-CAM feed box */
+/* Style for ESP32-CAM container */
+.cam {
+
+    bottom: 20px;             /* Distance from bottom */
+    transform: translateX(-50%);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000;            
+}
+
+/* Image styling */
+.cam img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Heading styling */
+.cam h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.box img {
+    border-radius: 8px;
+    margin-bottom: 15px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    color: #222;
+    margin-top: 20px;
+}
+
+/* Navigation bar */
+ul li {
+    list-style: none;
+    text-align: center;
+    display: block;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0 20px;
+}
+
+ul li:last-child {
+    border-right: none;
+}
+
+ul li a {
+    text-decoration: none;
+    display: block;
+    color: #fff;
+    font-weight: 500;
+}
+
+ul li a .icon {
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    margin: 0 auto 8px;
+    background-color: #d4edf0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 2.5px 5px #d4edf0;
+    transition: background 0.3s ease;
+}
+
+ul li a .icon .fa {
+    font-size: 22px;
+    color: #000;
+    transition: color 0.3s ease;
+}
+
+ul li a:hover .icon {
+    background-color: #b3e0e6;
+}
+
+ul li a:hover .icon .fa {
+    color: #007b8f;
+}
+
+/* Name text under icons */
+.name {
+    color: rgb(243, 229, 215);
+    font-size: 14px;
+}
+
+/* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 15px 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Left side title */
+.nav-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 1px;
+}
+
+/* Right side items */
+.nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+}
+
+/* Alert button style */
+.nav-item.alert {
+    background: #f44336;
+    color: #fff;
+}
+
+.nav-item.alert:hover {
+    background: #d32f2f;
+}
+
+/* Logout button style */
+.nav-item.logout {
+    background: #2196F3;
+    color: #fff;
+}
+
+.nav-item.logout:hover {
+    background: #1976d2;
+}
+
+/* Icon styling */
+.nav-item .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item .icon i {
+    font-size: 16px;
+}

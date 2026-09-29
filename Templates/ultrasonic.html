@@ -1,0 +1,89 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ultrasonic Sensor Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        #chart-container {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>📡 Ultrasonic Sensor Readings</h2>
+    <div id="chart-container">
+        <canvas id="ultraChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('ultraChart').getContext('2d');
+        const ultraChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], // timestamps
+                datasets: [{
+                    label: 'Distance (cm)',
+                    data: [],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Timestamp' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Distance (cm)' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        async function fetchUltrasonicData() {
+            try {
+                const response = await fetch('/ultrasonic_data');
+                const data = await response.json();
+
+                if (data.value) {
+                    ultraChart.data.labels.push(data.timestamp);
+                    ultraChart.data.datasets[0].data.push(data.value);
+
+                    // Keep only last 10 readings
+                    if (ultraChart.data.labels.length > 10) {
+                        ultraChart.data.labels.shift();
+                        ultraChart.data.datasets[0].data.shift();
+                    }
+
+                    ultraChart.update();
+                }
+            } catch (error) {
+                console.error("Error fetching ultrasonic data:", error);
+            }
+        }
+
+        // Fetch new data every 3 seconds
+        setInterval(fetchUltrasonicData, 3000);
+    </script>
+</body>
+</html>
+{% endblock %}
